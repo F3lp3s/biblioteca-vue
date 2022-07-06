@@ -1,20 +1,31 @@
 <template>
   <nav class="navbar">
-    <div class="navimg">
-      <img src="../imgs/sptech_logo.png" alt="">
-      <router-link to="/home">Home</router-link>
-    </div>
+    <router-link class="link-home" to="/home">
+      <div class="div-link">
+        <img src="../imgs/sptech_logo.png" alt="">
+        <p>Home</p>
+      </div>
+    </router-link>
     <hr>
-    <div class="navlink">
-      <router-link to="/home/lista">Lista de Livros</router-link>
-    </div>
+    <router-link to="/lista">
+      <div class="div-link">
+        <p>Lista de Livros</p>
+      </div>
+    </router-link>
     <hr>
-    <div class="navlink">
-      <router-link to="/home/reserva">Reservar</router-link>
-    </div>
+    <router-link to="/reserva">
+      <div class="div-link">
+        <p>Reservar</p>
+      </div>
+    </router-link>
     <hr>
-    <div class="perfil">
-      {{ ra }}
+    <div class="div-perfil">
+      <router-link class="link-perfil" to="/perfil">
+        <div class="nomeUser">
+        <p>{{ nomeUser }}</p>
+        </div>        
+        <div class="foto-perfil"></div>
+      </router-link>
     </div>
   </nav>
 </template>
@@ -24,7 +35,7 @@
     name: 'NavBar',
     data() {
       return{
-        ra: sessionStorage.nome
+        nomeUser: sessionStorage.nome
       }
     }
   }
@@ -37,37 +48,49 @@
     background-color: #031B4E;
     display: flex;
   }
-  .navbar img{
-    width: 50%
-  }
-  .navbar hr{
-    width: 0;
-    height: 100%;
-    margin: 0;
-    background-color: #f1f1f1;
-  }
-  .navimg{
-    width: 15%;
-    display: flex;
-    align-items: center;
-  }
-  .navlink{
-    width: fit-content;
-    display: flex;
-    align-items: center;
-  }
   .navbar a{
-    margin: 1em;
     text-decoration: none;
     color: #f1f1f1;
+  } 
+  .navbar .link-home{
+    width: 15%;
   }
-  .navimg:hover ,.navlink:hover{
+  .div-link{
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .navbar .div-link:hover{
     background-color: #63B1BC;
   }
-  .perfil{
+  .navbar hr{
+    margin: 0%;
+    height: 100%;
+  }
+  .div-link img{
+    width: 50%;
+  }
+  .div-link p{
+    margin: 0 1.5em 0 1.5em
+  }
+  .div-perfil{
+    height: 100%;
+    width: 10%;
+    margin-left: 55%;
+  }
+  .link-perfil{
+    width: 100%;
+    height: 100%;
     display: flex;
-    align-self: center;
-    color: #f1f1f1;
-    margin-left: 60%;
+    flex-direction: row;
+    align-items: center;
+  }
+  .link-perfil p{
+    margin: 0 1em 0 1em;
+  }
+  .foto-perfil{
+    padding: 17%;
+    border-radius: 100%;
+    background-color: #8a8a8a;
   }
 </style>

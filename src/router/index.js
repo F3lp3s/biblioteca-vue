@@ -3,6 +3,7 @@ import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
 import Lista from '../views/Lista.vue'
 import Reserva from '../views/Reserva.vue'
+import Perfil from '../views/UserPerfil.vue'
 
 const routes = [
   {
@@ -16,14 +17,19 @@ const routes = [
     component: Home
   },
   {
-    path: '/home/lista',
+    path: '/lista',
     name: 'ListaLivros',
     component: Lista
   },
   {
-    path: '/home/reserva',
+    path: '/reserva',
     name: 'ReservaLivros',
     component: Reserva
+  },
+  {
+    path: '/perfil',
+    name: 'Perfil',
+    component: Perfil
   }
 ]
 

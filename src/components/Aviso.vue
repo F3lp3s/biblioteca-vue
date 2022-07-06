@@ -23,8 +23,8 @@
   }
   @keyframes aparecer{
     0% {top: -10vh;}
-    30% {top: 1vh;}
-    70% {top: 1vh;}
+    10% {top: 1vh;}
+    90% {top: 1vh;}
     100% {top: -10vh;}
   }
   .alerta h3{
