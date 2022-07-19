@@ -4,13 +4,15 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "backend": "json-server --watch bd.json --port 5000",
+    "backend": "json-server --watch index.js --port 5000",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^3.8.3",
     "json-server": "^0.17.0",
+    "mysql": "^2.18.1",
+    "serverless-mysql": "^1.5.4",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"
   },

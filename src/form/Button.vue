@@ -1,12 +1,13 @@
 <template>
-  <button @click="funcao">{{ btnText }}</button>
+  <button @click="funcao" :class="classdif">{{ btnText }}</button>
 </template> 
 
 <script>
   export default{
     name: 'FormButton',
     props: [
-      'btnText'
+      'btnText',
+      'classdif'
     ]
   }
 </script>

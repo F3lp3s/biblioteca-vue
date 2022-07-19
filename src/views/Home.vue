@@ -7,24 +7,22 @@
     </div>
   </div>
   <div class="recomendados">
-    <h1>Recomendações:</h1>   
-    <div class="livros">
+    <h1>Recomendações:</h1>  
 
-      <div v-for="(livro, i) in livros" :key="i" class="cards">
-        <div class="img-livro">
-          <div class="placeholder"></div>
-        </div>
-        <p>{{ livro.nome }}</p>
-        <p>{{ livro.data }}</p>
-        <p>{{ livro.descricao }}</p>
-      </div>
+    <div class="livros">
+      <LivrosComp v-for="(livro, i) in livros" :key="i"
+        :titulo="livro.nome"
+        :autor="livro.autor"
+        :status="livro.disponibilidade"
+      />
     </div> 
     
   </div>
 </template>
 
 <script>
-  import NavBar from '../components/Navbar.vue'
+  import NavBar from '../components/Navbar.vue';
+  import LivrosComp from '../components/Livros.vue';
 
   export default {
     name: 'TelaHome',
@@ -34,7 +32,8 @@
       }
     },
     components: {
-      NavBar
+      NavBar,
+      LivrosComp
     },
     mounted() {
       
@@ -46,9 +45,10 @@
       }).then((resp) => {
         if(resp.ok) {
           resp.json().then(json => {
-            console.log(JSON.stringify(json));
+            // console.log(JSON.stringify(json));
               
             this.livros = json;
+            console.log(this.livros)
           })
         }
       }).catch((erro) => {
@@ -73,7 +73,7 @@
   }
   .msg p{
     color: #f1f1f1;
-    font-size: 3rem;
+    font-size: 3rem ;
     text-align: center;
     margin-right: 1.3em;
   }

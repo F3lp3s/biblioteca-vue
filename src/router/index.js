@@ -3,7 +3,8 @@ import Login from '../views/Login.vue'
 import Home from '../views/Home.vue'
 import Lista from '../views/Lista.vue'
 import Reserva from '../views/Reserva.vue'
-import Perfil from '../views/UserPerfil.vue'
+import PerfilUser from '../views/UserPerfil.vue'
+import PerfilAdmin from '../views/AdminPerfil.vue'
 
 const routes = [
   {
@@ -27,9 +28,14 @@ const routes = [
     component: Reserva
   },
   {
-    path: '/perfil',
-    name: 'Perfil',
-    component: Perfil
+    path: '/perfilUser',
+    name: 'PerfilUser',
+    component: PerfilUser
+  },
+  {
+    path: '/perfilAdmin',
+    name: 'PerfilAdmin',
+    component: PerfilAdmin
   }
 ]
 

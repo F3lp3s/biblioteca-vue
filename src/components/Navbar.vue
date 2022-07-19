@@ -20,7 +20,7 @@
     </router-link>
     <hr>
     <div class="div-perfil">
-      <router-link class="link-perfil" to="/perfil">
+      <router-link class="link-perfil" to="/perfilUser">
         <div class="nomeUser">
         <p>{{ nomeUser }}</p>
         </div>        

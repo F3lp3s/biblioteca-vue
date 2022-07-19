@@ -26,7 +26,8 @@
         mensagem: "Bem vindo a TechLibrary",
         subMensagem: "Agora é possivel encontrar e reservar os livros online",
         usuario: [],
-        aviso: false
+        aviso: false,
+        teste: {}
       }
     },
     methods: {
@@ -65,6 +66,12 @@
           console.log(erro);
         })
       }
+    },
+    async mounted() {
+      let busca = require('../../index');
+      console.log(busca)
+      // let resposta = busca.dados();
+      // console.log(resposta)
     },
     components: {
       FormLogin,
