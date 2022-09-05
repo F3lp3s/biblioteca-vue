@@ -1,6 +1,6 @@
 <template>
   <div class="background">
-    <AlertaAviso v-if="aviso"/>
+    <AlertaAviso v-if="aviso" alerta="alertVermelho" msg="Usuario não encontrado"/>
     <div class="text-cont">
       <div class="welcome">
         <h1>{{ mensagem }}</h1>
@@ -33,45 +33,43 @@
     methods: {
       async logar(ra, senha) {
         console.log(ra,senha);
-        fetch('http://localhost:5000/usuario', {
+        fetch(`http://localhost:5000/usuario/${ra}&${senha}`, {
           method: 'GET',
           headers:{
             'Content-Type': 'application/json',
-          },
+          }
         }).then((resp) => {
           if(resp.ok) {
             resp.json().then(json => {
               console.log(JSON.stringify(json));
-
-              for (var i = 0; i < json.length; i++ ) {
-                if(json[i].ra == ra && json[i].senha == senha) {
-                  sessionStorage.ra = json[i].ra;
-                  sessionStorage.nome = json[i].nome;
-                  this.$router.push('/home');
-                  return;    
-                }
+                
+              if(json[0].ra == ra && json[0].senha == senha) {
+                sessionStorage.id = json[0].id;
+                sessionStorage.ra = json[0].ra;
+                sessionStorage.nome = json[0].nome;
+                sessionStorage.img = json[0].img;
+                sessionStorage.permissoes = json[0].permissoes;
+                sessionStorage.dark = false;
               }
-
-              this.aviso = true;
-
-              const timer = setTimeout(() => {
-                this.aviso = false;
-              }, 3000)
-
-              return () => clearTimeout(timer)
+              if(json[0].id == 1) {
+                this.$router.push('/perfilAdmin');
+              } else {
+                this.$router.push('/home');
+              }
             })
-            
-          }
+             
+            this.aviso = true;
+
+            const timer = setTimeout(() => {
+              this.aviso = false;
+            }, 3000)
+
+            return () => clearTimeout(timer)
+            }
         }).catch((erro) => {
           console.log(erro);
         })
       }
-    },
-    async mounted() {
-      let busca = require('../../index');
-      console.log(busca)
-      // let resposta = busca.dados();
-      // console.log(resposta)
     },
     components: {
       FormLogin,

@@ -1,7 +1,14 @@
 <template>
   <NavBar/>
+  <msgAviso v-if="aparecerMsg" :alerta="alerta" :msg="msg"/>
+  <confirmacaoLivro v-if="aparecer" 
+    :nome="this.nome" 
+    :funcao1="devolucao" 
+    :funcao2="rejeitar"
+    :funcao3="fechar"
+  />
   <div class="container4">
-    <div class="devolucao">
+    <div class="devolucao" :class="devolucaoDark">
       <div class="textAdmin">
         <h2>Livros para confirmar devolução:</h2>
       </div>
@@ -10,13 +17,14 @@
           :titulo="livro.nome"
           :autor="livro.autor"
           :status="livro.disponibilidade"
+          :caminho="livro.caminho"
+          @click="confirmacao(i, livro.id, livro.nome)"
         /> 
       </div>
     </div>
-    <div class="perfilAdmin">
+    <div class="perfilAdmin" :class="perfilAdminDark">
       <div class="contAdminPerfil">
-        <div class="adminPerfilImg"></div>
-        <h2>{{ nomeUser }}</h2>   
+        <img class="adminPerfilImg" :src="'http://localhost:5000/img/' + img">
       </div>
       <div class="contTextoAdmin">
         <p class="p1">Livros Para confirmar a devolução:</p>
@@ -29,21 +37,32 @@
 <script>
   import NavBar from '@/components/Navbar.vue'
   import LivrosComp from '@/components/Livros.vue'
+  import confirmacaoLivro from '@/components/Confirmacao.vue'
+  import msgAviso from '@/components/Aviso.vue';
 
   export default {
     name: "PerfilAdmin",
     data() {
       return{
         livros: [],
-        nomeUser: sessionStorage.nome
+        nomeUser: sessionStorage.nome,
+        aparecer: false,
+        nome: "",
+        index: 0,
+        aparecerMsg: false,
+        alerta: "",
+        msg: "",
+        img: sessionStorage.img
       }
     },
     components: {
       NavBar,
-      LivrosComp
+      LivrosComp,
+      confirmacaoLivro,
+      msgAviso
     },
     mounted() {
-      fetch('http://localhost:5000/livros', {
+      fetch('http://localhost:5000/livrosAdmin', {
         method: 'GET',
         headers:{
           'Content-Type': 'application/json'
@@ -51,17 +70,88 @@
       }).then((resp) => {
         if(resp.ok) {
           resp.json().then(json => {
-            for(let i = 0; i < json.length; i++) {
-              if(json[i].disponibilidade == "amarelo") {
-                this.livros.push(json[i])
-              }
-            }
+            this.livros = json
             console.log(json);
           })
         }
       }).catch((erro) => {
         console.log(erro);
       })
+    },
+    computed: {
+      devolucaoDark() {
+        return {
+          devolucaoDark: sessionStorage.dark === "true"
+        }
+      },
+      perfilAdminDark() {
+        return {
+          perfilAdminDark: sessionStorage.dark === "true"
+        }
+      }
+    },
+    methods: {
+      confirmacao(i, id, nome) {
+        this.nome = nome;
+        this.index = id;
+        this.i = i;
+        this.aparecer = true;
+      },
+      devolucao() {
+        console.log(this.index)
+        fetch(`http://localhost:5000/devolverLivro/${this.index}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then((resp) => {
+          if(resp.ok) {
+            this.livros.splice(this.i, 1);
+            this.aparecer = false;
+
+            this.alerta = "alertVerde";
+            this.msg = "Devolvido com sucesso!"
+            this.aparecerMsg = true;
+
+            const timer = setTimeout(() => {
+              this.aparecerMsg = false;
+            }, 3000)
+
+            return () => clearTimeout(timer)
+          }
+        }).catch((erro) => {
+          console.log(erro);
+        })
+      },
+      rejeitar() {
+        console.log('rejeitar')
+        fetch(`http://localhost:5000/voltarLivro/${this.index}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then((resp) => {
+          if(resp.ok) {
+            this.livros.splice(this.i, 1);
+            this.aparecer = false;
+
+            this.alerta = "alertVerde";
+            this.msg = "Rejeitado com sucesso!"
+            this.aparecerMsg = true;
+
+            const timer = setTimeout(() => {
+              this.aparecerMsg = false;
+            }, 3000)
+
+            return () => clearTimeout(timer)
+          }
+        }).catch((erro) => {
+          console.log(erro);
+        })
+      },
+      fechar() {
+        this.aparecer = false;
+      }
     }
   }
 </script>
@@ -82,6 +172,11 @@
     border-radius: 5px;
     overflow-y: scroll;
 /* margin: 2.5% 0 0 0; */
+  }
+  .devolucaoDark {
+    background-color: #092769;
+    border: solid 1px #d6d6d6;   
+    overflow: auto;
   }
   .textAdmin{
     width: 100%;
@@ -108,6 +203,10 @@
     border-radius: 5px;
     margin: 0 0 0 2%;
   }
+  .perfilAdminDark{
+    background-color: #010e29;
+    border: solid 1px #d6d6d6;    
+  }
   .contAdminPerfil{
     width: 100%;
     height: 55%;
@@ -118,13 +217,13 @@
     color: #f1f1f1;
   }
   .adminPerfilImg{
-    width: auto;
-    height: auto;
-    padding: 30%;
+    width: 50%;
+    height: 60%;
+    vertical-align: middle;
     border-radius: 50%;
-    background-color: #8a8a8a;
     align-self: center;
-    /* margin-top: 8%; */
+    border: solid 5px #63B1BC;
+    margin: 10% 0 5% 0;
   }
   .contAdminPerfil h2{
     margin: 0;

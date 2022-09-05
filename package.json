@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "fs": "^0.0.1-security",  
     "json-server": "^0.17.0",
     "mysql": "^2.18.1",
     "serverless-mysql": "^1.5.4",

@@ -1,30 +1,50 @@
 <template>
-  <nav class="navbar">
-    <router-link class="link-home" to="/home">
-      <div class="div-link">
-        <img src="../imgs/sptech_logo.png" alt="">
-        <p>Home</p>
-      </div>
-    </router-link>
-    <hr>
-    <router-link to="/lista">
-      <div class="div-link">
-        <p>Lista de Livros</p>
-      </div>
-    </router-link>
-    <hr>
-    <router-link to="/reserva">
-      <div class="div-link">
-        <p>Reservar</p>
-      </div>
-    </router-link>
-    <hr>
-    <div class="div-perfil">
-      <router-link class="link-perfil" to="/perfilUser">
-        <div class="nomeUser">
-        <p>{{ nomeUser }}</p>
-        </div>        
-        <div class="foto-perfil"></div>
+  <nav>
+    <!-- <div class="logo-nav">
+      <img src="@/imgs/sptech_logo.png" alt="">
+    </div> -->
+    <div class="links-nav">
+      <router-link v-if="home" to="/home">
+        <div class="link">
+          <p>Inicio</p>
+        </div>
+      </router-link>
+      <router-link v-if="lista" to="/lista">
+        <div class="link">
+          <p>Lista de Livros</p>
+        </div>
+      </router-link>
+      <router-link v-if="reservar" to="/reserva">
+        <div class="link">
+          <p>Reservas</p>
+        </div>
+      </router-link>
+      <router-link v-if="perfils" to="/home">
+        <div class="link">
+          <p>Gestão de perfil</p>
+        </div>
+      </router-link>
+      <router-link v-if="livros" to="/GestaoLivros">
+        <div class="link">
+          <p>Gestão de livros</p>
+        </div>
+      </router-link>
+    </div>
+    <div @click="clickButton" class="darkMode">
+      <img src="../imgs/darkmode.png" alt="">
+    </div>
+    <div class="perfil">
+      <router-link v-if="user" to="/perfilUser">
+        <div class="link-perfil">
+          <span>{{ nomeUser }}</span>
+          <img :src="'http://localhost:5000/img/' + img">
+        </div>
+      </router-link>
+      <router-link v-if="admin" to="/perfilAdmin">
+        <div class="link-perfil">
+          <span>{{ nomeUser }}</span>
+          <img :src="'http://localhost:5000/img/' + img">
+        </div>
       </router-link>
     </div>
   </nav>
@@ -32,65 +52,133 @@
 
 <script>
   export default{
-    name: 'NavBar',
+    name: 'NavBarV2',
     data() {
-      return{
-        nomeUser: sessionStorage.nome
+      return {
+        nomeUser: sessionStorage.nome,
+        img: sessionStorage.img,
+        home: false,
+        lista: false,
+        reservar: false,
+        perfils: false,
+        livros: false,
+        user: false,
+        admin: false
+      }
+    },
+    beforeMount() {
+      console.log(sessionStorage.dark === 'true');
+        if(sessionStorage.dark === 'true') {
+          console.log('escuro')
+          document.body.classList.add("dark");
+          document.body.classList.remove("light");
+        } else {
+          console.log('branco')
+          document.body.classList.add("light");
+          document.body.classList.remove("dark");
+        }
+    },
+    mounted() {
+      if(sessionStorage.permissoes == 1) {
+        this.perfils = true;
+        this.livros = true;
+        this.admin = true;
+      } else if(sessionStorage.permissoes == 2) {
+        this.home = true;
+        this.lista = true;
+        this.reservar = true;
+        this.user = true;
+      } else if(sessionStorage.permissoes == 3) {
+        this.home = true;
+        this.lista = true;
+        this.perfil = true;
+      }
+    },
+    methods: {
+      clickButton() {
+        if(document.body.classList.contains("dark")) {
+          sessionStorage.dark = "false"
+        } else {
+          sessionStorage.dark = "true"
+        }
+        location.reload();
       }
     }
   }
 </script>
 
 <style>
-  .navbar{
+  nav{
     width: 100%;
-    height: 9vh;
+    height: 8.5vh;
     background-color: #031B4E;
     display: flex;
+    z-index: 0;
+    border-bottom: 1px solid #f1f1f1;
   }
-  .navbar a{
+  nav a{
     text-decoration: none;
     color: #f1f1f1;
-  } 
-  .navbar .link-home{
-    width: 15%;
   }
-  .div-link{
+  .links-nav{
+    height: 100%;
+    width: 75%;
+    /* background-color: black; */
+    display: flex;
+  }
+  .link{
     height: 100%;
     display: flex;
     align-items: center;
+    border-right: solid 1px #f1f1f1;
+    /* background-color: red; */
   }
-  .navbar .div-link:hover{
-    background-color: #63B1BC;
+  .link:hover{
+    background-color: #63B1BC ;
   }
-  .navbar hr{
-    margin: 0%;
+  .link p{
+    margin: 0 1.2em 0 1.2em;
+  }
+  .perfil{
     height: 100%;
+    width: 15%;
+    /* margin-left: 10%; */
+    /* background-color: pink; */
   }
-  .div-link img{
-    width: 50%;
-  }
-  .div-link p{
-    margin: 0 1.5em 0 1.5em
-  }
-  .div-perfil{
-    height: 100%;
-    width: 10%;
-    margin-left: 55%;
+  .perfil img{
+    width: 27%;
+    height: 90%;
+    border-radius: 50%;
+    border: solid 2px #63B1BC;
+    margin: 0 5% 0 10%;
+    /* float: right; */
   }
   .link-perfil{
-    width: 100%;
     height: 100%;
     display: flex;
-    flex-direction: row;
     align-items: center;
+    justify-content: flex-end;
+    border-right: solid 1px #f1f1f1;
+    /* background-color: blueviolet; */
   }
-  .link-perfil p{
-    margin: 0 1em 0 1em;
+  .link-perfil:hover{
+    color: #63B1BC;
   }
-  .foto-perfil{
-    padding: 17%;
-    border-radius: 100%;
-    background-color: #8a8a8a;
+  .changeColor{
+    width: 10%;
+    height: 50%;
+    margin-right: 10%;
+  }
+  .darkMode{
+    width: 10%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    /* background-color: red; */
+  }
+  .darkMode img{
+    width: 20%
   }
 </style>

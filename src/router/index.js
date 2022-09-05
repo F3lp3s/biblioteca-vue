@@ -5,6 +5,7 @@ import Lista from '../views/Lista.vue'
 import Reserva from '../views/Reserva.vue'
 import PerfilUser from '../views/UserPerfil.vue'
 import PerfilAdmin from '../views/AdminPerfil.vue'
+import GestaoLivros from '../views/GestaoLivros.vue'
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
     path: '/perfilAdmin',
     name: 'PerfilAdmin',
     component: PerfilAdmin
+  },
+  {
+    path: '/gestaoLivros',
+    name: 'GestaoLivros',
+    component: GestaoLivros
   }
 ]
 

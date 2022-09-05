@@ -7,7 +7,8 @@
     name: 'FormButton',
     props: [
       'btnText',
-      'classdif'
+      'classdif',
+      'funcao'
     ]
   }
 </script>
