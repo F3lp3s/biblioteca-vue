@@ -72,7 +72,7 @@
     computed: {
       mudarLivrosDark() {
         return {
-          mudarLivrosDark: sessionStorage.dark === "true"
+          mudarLivrosDark: !this.$store.state.darkMode
         }
       }
     },
@@ -133,7 +133,7 @@
   }
   .exemploExcluir .livroInfo{
     margin: 9% 0 5% 0;
-    color: #1f1f1f;
+    /* color: #1f1f1f; */
   }
   .exemploExcluir button{
     padding: 2% 9% 2% 9%;
@@ -146,6 +146,6 @@
   .exemploExcluir button:hover {
     background-color: #f1f1f1;
     border: solid 2px #1f1f1f;
-    color: #1f1f1f;
+    /* color: #1f1f1f; */
   }
 </style>

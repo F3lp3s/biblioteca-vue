@@ -10,6 +10,7 @@
     :descricao="descricao"
     :caminho="caminho"
     :fechar="fechar"
+    txtBotao="Reservar Livro"
   />
   <div class="container">
     <div class="filtros" :class="bordaFiltro">
@@ -119,12 +120,12 @@
       // },
       bordaFiltro() {
         return {
-          bordaFiltro: sessionStorage.dark === "true"
+          bordaFiltro: !this.$store.state.darkMode
         }
       },  
       listaDark() {
         return {
-          listaDark: sessionStorage.dark === "true"
+          listaDark: !this.$store.state.darkMode
         }
       }
     },
@@ -238,11 +239,11 @@
             'Content-Type': 'application/json'
           }
         }).then((resp) => {
-          if(resp.ok) {
+          if(resp.ok && this.$store.state.qtdLivros) {
             location.reload()
           }
         }).catch((erro) => {
-          console.log(erro);
+          console.log(erro, "devolva um livro antes");
         })
       }
     }

@@ -10,12 +10,13 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
-    "fs": "^0.0.1-security",  
+    "fs": "^0.0.1-security",
     "json-server": "^0.17.0",
     "mysql": "^2.18.1",
     "serverless-mysql": "^1.5.4",
-    "vue": "^3.2.13",
-    "vue-router": "^4.0.3"
+    "vue": "^3.2.36",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

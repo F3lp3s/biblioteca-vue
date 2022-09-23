@@ -5,10 +5,11 @@
     :id="id"
     :nome="nome"
     :autor="autor"
-    :data="dia.split('/')"
+    :data="dia"
     :descricao="desc"
     :caminho="caminho"
     :fechar="ligar"
+    txtBotao="Devolver Livro"
   />
   <div class="container2">
     <div class="livrosPerfil" :class="livroPerfilDark">
@@ -30,7 +31,7 @@
         <img class="reservaPerfilImg" :src="'http://localhost:5000/img/' + img">
       </div>
       <div class="contInfoStatus">
-        <p>Dia de devolução: {{ dia }}</p>
+        <p>Dia de devolução: {{ `${dia[2]}/${dia[1]}` }}</p>
         <p>Livros para devolver: {{ devolver.length }}</p>
       </div>
       <div class="contBotoes">
@@ -50,7 +51,8 @@
     data() { 
       return {
         livros: [],
-        dia: `${new Date().getDate()}/0${new Date().getMonth() + 1}`,
+        dia: [new Date().getFullYear(), "0" + (new Date().getMonth() + 1), new Date().getDate()],
+        // dia: `${new Date().getDate()}/0${new Date().getMonth() + 1}/${new Date}`,
         nomeUser: sessionStorage.nome,
         devolver: [],
         infoLivros: false,
@@ -59,7 +61,7 @@
         autor: '',
         desc: '',
         caminho: '',
-        id: ''
+        id: '' 
       }
     },
     mounted() {
@@ -81,12 +83,12 @@
     computed: {
       livroPerfilDark() {
         return {
-          livroPerfilDark: sessionStorage.dark === "true"
+          livroPerfilDark: !this.$store.state.darkMode
         }
       },
       perfilInfoDark() {
         return {
-          perfilInfoDark: sessionStorage.dark === "true"
+          perfilInfoDark: !this.$store.state.darkMode
         }
       }
     },

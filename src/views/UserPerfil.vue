@@ -59,12 +59,12 @@
     computed: {
       perfilConfigDark() {
         return {
-          perfilConfigDark: sessionStorage.dark === "true"
+          perfilConfigDark: !this.$store.state.darkMode
         }
       },
       historicoDark() {
         return {
-          historicoDark: sessionStorage.dark === "true"
+          historicoDark: !this.$store.state.darkMode
         }
       }
     },

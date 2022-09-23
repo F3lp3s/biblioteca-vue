@@ -1,7 +1,7 @@
 <template>
   <NavBar/>
   <InfoLivros v-if="modal" 
-    :funcao="fechar"
+    :funcao="reservarLivro"
     :id="id"
     :nome="nome"
     :autor="autor"
@@ -9,6 +9,7 @@
     :descricao="descricao"
     :caminho="caminho"
     :fechar="fechar"
+    txtBotao="Reservar Livro"
   />
   <div class="logo" :class="bordaBanner" >
     <img src="../imgs/sptech_logo.png" alt="">
@@ -59,12 +60,12 @@
     computed: {
       bordaBanner() {
         return {
-          bordaBanner: sessionStorage.dark === "true"
+          bordaBanner: !this.$store.state.darkMode
         }
       },
       recomeDark() {
         return {
-          recomendacaoDark: sessionStorage.dark === "true"
+          recomendacaoDark: !this.$store.state.darkMode
         }
       }
     },
@@ -85,6 +86,20 @@
       },
       fechar() {
         this.modal = !this.modal;
+      },
+      reservarLivro(id) {
+        fetch(`http://localhost:5000/reservar/${sessionStorage.id}&${id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then((resp) => {
+          if(resp.ok && this.$store.state.qtdLivros) {
+            this.modal = false;
+          }
+        }).catch((erro) => {
+          console.log(erro);
+        })
       }
     },
     mounted() {
@@ -98,9 +113,7 @@
           resp.json().then(json => {
             let i = 0;
             let lista = [];
-            let trys = 0
             while(i < 8) {
-              trys++
               let n = Math.floor(Math.random() * json.length);
               let ac = true;
               for(let j = 0; j < lista.length; j++) {
@@ -108,7 +121,6 @@
                   ac = false;
                 }
               }
-              console.log(trys)
               if(ac) {
                 lista.push(n)
                 this.livros.push(json[n])

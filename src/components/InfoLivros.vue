@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="addLista">
-          <ButtonVue @click="funcao(idFunction)" btnText="Adicionar a Lista"/>
+          <ButtonVue @click="funcao(idFunction)" :btnText="txtBotao"/>
           <ButtonVue btnText="Fechar" @click="fechar"/> 
         </div>
       </div>
@@ -67,7 +67,8 @@
       "data",
       "descricao",
       "caminho",
-      "funcao"
+      "funcao",
+      "txtBotao"
     ],
   }
 </script>

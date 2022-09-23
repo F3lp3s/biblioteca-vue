@@ -81,12 +81,12 @@
     computed: {
       devolucaoDark() {
         return {
-          devolucaoDark: sessionStorage.dark === "true"
+          devolucaoDark: !this.$store.state.darkMode
         }
       },
       perfilAdminDark() {
         return {
-          perfilAdminDark: sessionStorage.dark === "true"
+          perfilAdminDark: !this.$store.state.darkMode
         }
       }
     },

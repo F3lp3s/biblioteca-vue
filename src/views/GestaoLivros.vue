@@ -1,15 +1,13 @@
 <template>
   <NavBar/>
   <div @click="mudar" class="switch" :class="switchDark">
-    <div class="flip" :class="{desligar: criar, ligar: !criar, flipDark} ">
+    <div class="flip" :class="{desligar: criar, ligar: !criar}">
       {{ (criar) ? 'Criar' : 'Excluir' }}
     </div>
   </div>
 
   <AdicionarLivro v-if="criar"/>
   <ExcluirLivro v-if="!criar"/>
-
-  <img :src="link" alt="">
 </template>
 
 <script>
@@ -27,12 +25,12 @@
     computed: {
       switchDark() {
         return {
-          switchDark: sessionStorage.dark === "true"
+          switchDark: !this.$store.state.darkMode
         }
       },
       flipDark() {
         return {
-          flipDark: sessionStorage.dark === "true"
+          flipDark: !this.$store.state.darkMode
         }
       }
     },

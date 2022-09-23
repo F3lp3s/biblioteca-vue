@@ -1,5 +1,5 @@
 <template>
-  <div class="livroInfo" :class="{livroDark: dark}">
+  <div class="livroInfo" :class="{livroDark: !this.$store.state.darkMode}">
     <div class="contImg">
       <img :src="caminho">
     </div>
@@ -18,16 +18,11 @@
 <script>
   export default {
     name: 'LivrosComp',
-    data() {
-      return{
-        dark: sessionStorage.dark === "true"
-      }
-    },
     computed: {
       changeLine() {
         return {
-          naoInteiro: !this.dark, 
-          inteiro: this.dark
+          naoInteiro: this.$store.state.darkMode, 
+          inteiro: !this.$store.state.darkMode
         };
       }
     },

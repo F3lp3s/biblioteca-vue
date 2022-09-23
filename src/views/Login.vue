@@ -49,7 +49,7 @@
                 sessionStorage.nome = json[0].nome;
                 sessionStorage.img = json[0].img;
                 sessionStorage.permissoes = json[0].permissoes;
-                sessionStorage.dark = false;
+                this.$store.dispatch('qtdLivros');
               }
               if(json[0].id == 1) {
                 this.$router.push('/perfilAdmin');

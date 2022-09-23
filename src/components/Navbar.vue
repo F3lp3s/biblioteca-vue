@@ -66,18 +66,6 @@
         admin: false
       }
     },
-    beforeMount() {
-      console.log(sessionStorage.dark === 'true');
-        if(sessionStorage.dark === 'true') {
-          console.log('escuro')
-          document.body.classList.add("dark");
-          document.body.classList.remove("light");
-        } else {
-          console.log('branco')
-          document.body.classList.add("light");
-          document.body.classList.remove("dark");
-        }
-    },
     mounted() {
       if(sessionStorage.permissoes == 1) {
         this.perfils = true;
@@ -96,12 +84,17 @@
     },
     methods: {
       clickButton() {
-        if(document.body.classList.contains("dark")) {
-          sessionStorage.dark = "false"
+        this.$store.commit('changMode')
+        console.log(this.$store.state.darkMode);
+        if(!this.$store.state.darkMode) {
+          console.log('escuro')
+          document.body.classList.add("dark");
+          document.body.classList.remove("light");
         } else {
-          sessionStorage.dark = "true"
+          console.log('branco')
+          document.body.classList.add("light");
+          document.body.classList.remove("dark");
         }
-        location.reload();
       }
     }
   }

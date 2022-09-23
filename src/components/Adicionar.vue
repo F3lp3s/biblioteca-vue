@@ -70,7 +70,7 @@
     computed: {
       mudarLivrosDark() {
         return {
-          mudarLivrosDark: sessionStorage.dark === "true"
+          mudarLivrosDark: !this.$store.state.darkMode
         }
       }
     },
@@ -179,6 +179,9 @@
     margin: 2% 0 0 10%;
     border-radius: 10px;
     display: flex;
+  }
+  .mudarLivros h2{
+    color: #f1f1f1;
   }
   .mudarLivrosDark{
     background-color: #02339c;
