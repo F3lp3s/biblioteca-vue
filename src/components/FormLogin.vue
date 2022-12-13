@@ -33,5 +33,5 @@
   }
   .template{
     width: 100%;
-  }
+}
 </style>

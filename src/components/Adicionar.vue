@@ -92,7 +92,7 @@
         await fetch("https://api.imgur.com/3/image/", {
           method: "POST",
           headers: {
-            Authorization: `Client-ID 578c03913026029` 
+            Authorization: `Client-ID 852865f54a814b6` 
           },
           body: formData
         }).then(data => {
@@ -104,7 +104,6 @@
         }).catch(error => {
           console.log("Algo deu errado!!", error);
           deuCerto = false;
-          return
         });
 
         if(deuCerto) {

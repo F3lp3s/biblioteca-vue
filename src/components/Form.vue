@@ -1,5 +1,5 @@
 <template>
-  <form class="formulario" @submit.prevent="logar">
+  <form class="formularioLogin" @submit.prevent="logar">
     <FormInput v-model:loginValue="ra" classe="formInput" label="RA" type="text"/>
     <FormInput v-model:loginValue="senha" classe="formInput" label="Senha" type="password"/>
     <FormButton btnText="Logar"/>
@@ -34,13 +34,13 @@
 </script>
 
 <style>
-  .formulario{
+  .formularioLogin{
     display: flex;
     flex-direction: column;
     align-items: baseline;
     color: #f1f1f1;
   }
-  .formulario label{
+  .formularioLogin label{
     margin-top: 1em;
     margin-left: 15%;
   }
@@ -52,19 +52,19 @@
     border-radius: 10px;
     border: 0.1em solid #0762C8;
   }
-  .formulario button{
+  .formularioLogin button{
     width: 30%;
     height: 2em;
-    margin: 3em 0 0 34%;
+    margin: 3em 0 0 0;
     border: 0.1em solid #f1f1f1;
     color: #f1f1f1;
     background-color: #0762C8;
     border-radius: 5px;
   }
-  .formulario button:hover{
+  .formularioLogin button:hover{
     background-color: #031B4E;
   }
-  .formulario button:active{
+  .formularioLogin button:active{
     background-color: #000;
   }
 </style>
